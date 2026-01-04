@@ -50,5 +50,5 @@ pub use fieldset::Fieldset;
 pub use tab_container::{TabContainer, TabPanel};
 pub use text_area::{TextArea, TextAreaSize};
 pub use time_line::{TimeLine, TimeLineBadge, TimeLineBody};
-pub use timeline::{Timeline, TimelineItem, TimelineStart, TimelineMiddle, TimelineEnd};
+pub use timeline::{Timeline, TimelineDirection, TimelineItem, TimelineStart, TimelineMiddle, TimelineEnd};
 pub use tooltip::{ToolTip, ToolTipColor};
