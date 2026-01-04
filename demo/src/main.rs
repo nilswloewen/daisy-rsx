@@ -2,6 +2,7 @@
 
 use daisy_rsx::{
     Accordian,
+    AppLayout,
     Alert, AlertColor,
     Avatar, AvatarSize, AvatarType,
     Badge, BadgeColor, BadgeSize, BadgeStyle,
@@ -16,6 +17,7 @@ use daisy_rsx::{
     FileInput, FileInputColor,
     Input, InputType,
     Modal, ModalAction, ModalBody,
+    NavGroup, NavItem,
     Pagination,
     Range, RangeColor,
     RelativeTime, RelativeTimeFormat,
@@ -56,9 +58,6 @@ fn main() {
 #[component]
 fn App() -> Element {
     rsx! {
-        document::Link { rel: "icon", href: FAVICON }
-        document::Link { rel: "stylesheet", href: MAIN_CSS }
-        script { r#type: "module", src: "https://esm.sh/@github/relative-time-element@4" }
         DaisyRsxKitchenSink {}
     }
 }
@@ -93,9 +92,44 @@ fn ComponentDemo(label: String, children: Element) -> Element {
 #[component]
 pub fn DaisyRsxKitchenSink() -> Element {
     rsx! {
-        div { class: "min-h-screen bg-base-100",
-            // Main container
-            div { class: "container mx-auto px-4 py-8 max-w-6xl",
+        AppLayout {
+            title: "Daisy RSX Kitchen Sink".to_string(),
+            fav_icon_src: FAVICON.to_string(),
+            stylesheets: vec![MAIN_CSS.to_string()],
+            js_href: "https://esm.sh/@github/relative-time-element@4".to_string(),
+            sidebar_header: rsx! {
+                a { href: "#", class: "text-xl font-bold", "Daisy RSX" }
+            },
+            sidebar: rsx! {
+                NavGroup {
+                    heading: "Components".to_string(),
+                    content: rsx! {
+                        NavItem { href: "#buttons".to_string(), icon: HEADER_SVG.to_string(), title: "Buttons & Actions".to_string() }
+                        NavItem { href: "#feedback".to_string(), icon: HEADER_SVG.to_string(), title: "Feedback & Alerts".to_string() }
+                        NavItem { href: "#forms".to_string(), icon: HEADER_SVG.to_string(), title: "Form Elements".to_string() }
+                        NavItem { href: "#data".to_string(), icon: HEADER_SVG.to_string(), title: "Data Display".to_string() }
+                        NavItem { href: "#navigation".to_string(), icon: HEADER_SVG.to_string(), title: "Navigation".to_string() }
+                        NavItem { href: "#overlays".to_string(), icon: HEADER_SVG.to_string(), title: "Overlays & Modals".to_string() }
+                        NavItem { href: "#timelines".to_string(), icon: HEADER_SVG.to_string(), title: "Timelines".to_string() }
+                        NavItem { href: "#utility".to_string(), icon: HEADER_SVG.to_string(), title: "Utility".to_string() }
+                    }
+                }
+                NavGroup {
+                    heading: "Marketing".to_string(),
+                    content: rsx! {
+                        NavItem { href: "#marketing".to_string(), icon: HEADER_SVG.to_string(), title: "Marketing Components".to_string() }
+                    }
+                }
+            },
+            sidebar_footer: rsx! {
+                p { class: "text-xs text-base-content/60", "Built with Daisy RSX" }
+            },
+            header: rsx! {
+                h1 { class: "text-xl font-semibold ml-4", "Kitchen Sink Demo" }
+            },
+
+            // Main content
+            div { class: "p-8 max-w-6xl mx-auto",
 
                 // Page Header
                 div { class: "prose prose-lg max-w-none mb-12 text-center",
@@ -106,6 +140,7 @@ pub fn DaisyRsxKitchenSink() -> Element {
                 // ============================================
                 // SECTION: Buttons & Actions
                 // ============================================
+                div { id: "buttons" }
                 Section {
                     title: "Buttons & Actions".to_string(),
                     description: "Interactive button components, tooltips, and dropdowns.".to_string(),
@@ -191,6 +226,7 @@ pub fn DaisyRsxKitchenSink() -> Element {
                 // ============================================
                 // SECTION: Feedback & Alerts
                 // ============================================
+                div { id: "feedback" }
                 Section {
                     title: "Feedback & Alerts".to_string(),
                     description: "Components for displaying status, notifications, and empty states.".to_string(),
@@ -251,6 +287,7 @@ pub fn DaisyRsxKitchenSink() -> Element {
                 // ============================================
                 // SECTION: Form Elements
                 // ============================================
+                div { id: "forms" }
                 Section {
                     title: "Form Elements".to_string(),
                     description: "Input controls and form components for data entry.".to_string(),
@@ -372,6 +409,7 @@ pub fn DaisyRsxKitchenSink() -> Element {
                 // ============================================
                 // SECTION: Data Display
                 // ============================================
+                div { id: "data" }
                 Section {
                     title: "Data Display".to_string(),
                     description: "Components for presenting data and content.".to_string(),
@@ -427,6 +465,7 @@ pub fn DaisyRsxKitchenSink() -> Element {
                 // ============================================
                 // SECTION: Navigation & Structure
                 // ============================================
+                div { id: "navigation" }
                 Section {
                     title: "Navigation & Structure".to_string(),
                     description: "Components for organizing content and navigation.".to_string(),
@@ -476,6 +515,7 @@ pub fn DaisyRsxKitchenSink() -> Element {
                 // ============================================
                 // SECTION: Overlays & Modals
                 // ============================================
+                div { id: "overlays" }
                 Section {
                     title: "Overlays & Modals".to_string(),
                     description: "Popup dialogs and slide-out drawers for contextual content.".to_string(),
@@ -524,6 +564,7 @@ pub fn DaisyRsxKitchenSink() -> Element {
                 // ============================================
                 // SECTION: Timelines
                 // ============================================
+                div { id: "timelines" }
                 Section {
                     title: "Timelines".to_string(),
                     description: "Components for displaying chronological events and progress.".to_string(),
@@ -630,6 +671,7 @@ pub fn DaisyRsxKitchenSink() -> Element {
                 // ============================================
                 // SECTION: Utility
                 // ============================================
+                div { id: "utility" }
                 Section {
                     title: "Utility".to_string(),
                     description: "Helper components for common use cases.".to_string(),
@@ -655,6 +697,7 @@ pub fn DaisyRsxKitchenSink() -> Element {
                 // ============================================
                 // SECTION: Marketing Components
                 // ============================================
+                div { id: "marketing" }
                 Section {
                     title: "Marketing Components".to_string(),
                     description: "Pre-built sections for marketing and landing pages.".to_string(),
