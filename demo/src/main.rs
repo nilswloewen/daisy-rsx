@@ -58,6 +58,7 @@ fn App() -> Element {
     rsx! {
         document::Link { rel: "icon", href: FAVICON }
         document::Link { rel: "stylesheet", href: MAIN_CSS }
+        script { r#type: "module", src: "https://esm.sh/@github/relative-time-element@4" }
         DaisyRsxKitchenSink {}
     }
 }
@@ -269,6 +270,18 @@ pub fn DaisyRsxKitchenSink() -> Element {
                             label: "Username".to_string(),
                             placeholder: "Enter username".to_string(),
                             help_text: "Your username must be 3-20 characters long.".to_string()
+                        }
+                    }
+
+                    ComponentDemo { label: "Input with Fieldset Legend".to_string(),
+                        Fieldset {
+                            legend: "What is your name?".to_string(),
+                            help_text: "Optional".to_string(),
+                            input {
+                                r#type: "text",
+                                class: "input",
+                                placeholder: "Type here"
+                            }
                         }
                     }
 
