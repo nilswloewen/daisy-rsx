@@ -15,7 +15,7 @@ use daisy_rsx::{
     Direction, DropDown, DropDownLink,
     Fieldset,
     FileInput, FileInputColor,
-    Input, InputType,
+    Input,
     Modal, ModalAction, ModalBody,
     NavGroup, NavItem,
     Pagination,
@@ -294,26 +294,28 @@ pub fn DaisyRsxKitchenSink() -> Element {
 
                     ComponentDemo { label: "Input Types".to_string(),
                         div { class: "grid grid-cols-1 md:grid-cols-2 gap-4",
-                            Input { name: "text-input".to_string(), label: "Text Input".to_string(), placeholder: "Enter text...".to_string() }
-                            Input { name: "email-input".to_string(), input_type: InputType::Email, label: "Email".to_string(), placeholder: "email@example.com".to_string() }
-                            Input { name: "password-input".to_string(), input_type: InputType::Password, label: "Password".to_string(), placeholder: "********".to_string() }
-                            Input { name: "number-input".to_string(), input_type: InputType::Number, label: "Number".to_string(), placeholder: "0".to_string() }
+                            Input { label: "Text Input", name: "text-input", placeholder: "Enter text..." }
+                            Input { label: "Email", name: "email-input", r#type: "email", placeholder: "email@example.com" }
+                            Input { label: "Password", name: "password-input", r#type: "password", placeholder: "********" }
+                            Input { label: "Number", name: "number-input", r#type: "number", placeholder: "0" }
                         }
                     }
 
-                    ComponentDemo { label: "Input with Help Text".to_string(),
-                        Input {
-                            name: "username".to_string(),
-                            label: "Username".to_string(),
-                            placeholder: "Enter username".to_string(),
-                            help_text: "Your username must be 3-20 characters long.".to_string()
+                    ComponentDemo { label: "Input with Fieldset".to_string(),
+                        Fieldset {
+                            legend: "Username",
+                            input {
+                                r#type: "text",
+                                name: "username",
+                                class: "input",
+                                placeholder: "Enter username"
+                            }
                         }
                     }
 
                     ComponentDemo { label: "Input with Fieldset Legend".to_string(),
                         Fieldset {
-                            legend: "What is your name?".to_string(),
-                            help_text: "Optional".to_string(),
+                            legend: "What is your name?",
                             input {
                                 r#type: "text",
                                 class: "input",
@@ -324,83 +326,75 @@ pub fn DaisyRsxKitchenSink() -> Element {
 
                     ComponentDemo { label: "TextArea".to_string(),
                         TextArea {
-                            name: "textarea-demo".to_string(),
-                            label: "Description".to_string(),
-                            placeholder: "Enter your description here...".to_string(),
-                            rows: "4".to_string(),
-                            help_text: "Maximum 500 characters.".to_string()
+                            label: "Description",
+                            name: "textarea-demo",
+                            placeholder: "Enter your description here...",
+                            rows: "4"
                         }
                     }
 
                     ComponentDemo { label: "Select".to_string(),
                         Select {
-                            name: "select-demo".to_string(),
-                            label: "Choose an option".to_string(),
-                            SelectOption { value: "".to_string(), "-- Select --" }
-                            SelectOption { value: "1".to_string(), "Option 1" }
-                            SelectOption { value: "2".to_string(), "Option 2" }
-                            SelectOption { value: "3".to_string(), "Option 3" }
+                            label: "Choose an option",
+                            name: "select-demo",
+                            SelectOption { value: "", "-- Select --" }
+                            SelectOption { value: "1", "Option 1" }
+                            SelectOption { value: "2", "Option 2" }
+                            SelectOption { value: "3", "Option 3" }
                         }
                     }
 
                     ComponentDemo { label: "CheckBox".to_string(),
                         div { class: "flex flex-col gap-3",
-                            div { class: "flex items-center gap-2",
-                                CheckBox { name: "check1".to_string(), value: "1".to_string(), "Default checkbox" }
-                            }
-                            div { class: "flex items-center gap-2",
-                                CheckBox { name: "check2".to_string(), value: "2".to_string(), checkbox_scheme: CheckBoxScheme::Primary, "Primary checkbox" }
-                            }
-                            div { class: "flex items-center gap-2",
-                                CheckBox { name: "check3".to_string(), value: "3".to_string(), checked: true, "Checked checkbox" }
-                            }
+                            CheckBox { label: "Default checkbox", name: "check1", value: "1" }
+                            CheckBox { label: "Primary checkbox", name: "check2", value: "2", checkbox_scheme: CheckBoxScheme::Primary }
+                            CheckBox { label: "Checked checkbox", name: "check3", value: "3", checked: true }
                         }
                     }
 
                     ComponentDemo { label: "Range".to_string(),
                         div { class: "space-y-4",
                             Range {
-                                name: "range-default".to_string(),
-                                min: 0,
-                                max: 100,
-                                value: 50,
-                                label: "Default Range".to_string(),
+                                label: "Default Range",
+                                name: "range-default",
+                                min: "0",
+                                max: "100",
+                                value: "50"
                             }
                             Range {
-                                name: "range-success".to_string(),
-                                min: 0,
-                                max: 100,
-                                value: 75,
-                                label: "Success Range".to_string(),
-                                range_color: RangeColor::Success,
+                                label: "Success Range",
+                                name: "range-success",
+                                min: "0",
+                                max: "100",
+                                value: "75",
+                                range_color: RangeColor::Success
                             }
                             Range {
-                                name: "range-error".to_string(),
-                                min: 0,
-                                max: 100,
-                                value: 25,
-                                label: "Error Range".to_string(),
-                                range_color: RangeColor::Error,
+                                label: "Error Range",
+                                name: "range-error",
+                                min: "0",
+                                max: "100",
+                                value: "25",
+                                range_color: RangeColor::Error
                             }
                         }
                     }
 
                     ComponentDemo { label: "FileInput".to_string(),
                         div { class: "space-y-4",
-                            FileInput { name: "file-default".to_string() }
-                            FileInput { name: "file-primary".to_string(), file_input_color: FileInputColor::Primary }
-                            FileInput { name: "file-secondary".to_string(), file_input_color: FileInputColor::Secondary }
+                            FileInput { label: "Default", name: "file-default" }
+                            FileInput { label: "Primary", name: "file-primary", file_input_color: FileInputColor::Primary }
+                            FileInput { label: "Secondary", name: "file-secondary", file_input_color: FileInputColor::Secondary }
                         }
                     }
 
                     ComponentDemo { label: "Fieldset".to_string(),
                         Fieldset {
-                            legend: "User Information".to_string(),
-                            help_text: "Please fill in your details below.".to_string(),
+                            legend: "User Information",
                             div { class: "space-y-4",
-                                Input { name: "fname".to_string(), label: "First Name".to_string(), placeholder: "John".to_string() }
-                                Input { name: "lname".to_string(), label: "Last Name".to_string(), placeholder: "Doe".to_string() }
-                                Input { name: "email".to_string(), input_type: InputType::Email, label: "Email".to_string(), placeholder: "john@example.com".to_string() }
+                                Input { label: "First Name", name: "fname", placeholder: "John" }
+                                Input { label: "Last Name", name: "lname", placeholder: "Doe" }
+                                Input { label: "Email", name: "email", r#type: "email", placeholder: "john@example.com" }
                             }
                         }
                     }
@@ -523,7 +517,7 @@ pub fn DaisyRsxKitchenSink() -> Element {
                     ComponentDemo { label: "Modal".to_string(),
                         div {
                             Button {
-                                popover_target: "demo-modal".to_string(),
+                                popovertarget: "demo-modal",
                                 button_scheme: ButtonScheme::Primary,
                                 "Open Modal"
                             }
@@ -549,7 +543,7 @@ pub fn DaisyRsxKitchenSink() -> Element {
                                 DrawerBody {
                                     p { "This is the drawer body. Drawers slide in from the side and are great for navigation menus, settings panels, or detailed information." }
                                     div { class: "mt-4",
-                                        Input { name: "drawer-input".to_string(), label: "Example Input".to_string(), placeholder: "Type something...".to_string() }
+                                        Input { label: "Example Input", name: "drawer-input", placeholder: "Type something..." }
                                     }
                                 }
                                 DrawerFooter {

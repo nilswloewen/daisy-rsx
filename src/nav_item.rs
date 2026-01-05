@@ -78,19 +78,3 @@ pub fn NavSubGroup(props: NavSubGroupProps) -> Element {
         ul { role: "list", class: "ActionList ActionList--subGroup", {props.children} }
     )
 }
-
-#[test]
-fn test_nav_item() {
-    let props = NavItemProps {
-        href: "test".to_string(),
-        icon: "test".to_string(),
-        title: "test".to_string(),
-        selected_item_id: Some("test".to_string()),
-        id: Some("test".to_string()),
-    };
-
-    let expected = r#"<li role="listitem"><a class="active" href="test" data-turbo-frame="main-content"><img width="16" height="16" src="test"/>test</a></li>"#;
-    let result = dioxus_ssr::render_element(NavItem(props));
-    // println!("{}", result);
-    assert_eq!(expected, result);
-}

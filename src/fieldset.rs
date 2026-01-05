@@ -1,30 +1,25 @@
 #![allow(non_snake_case)]
-#![allow(unused_braces)]
 
 use dioxus::prelude::*;
 
 #[derive(Props, Clone, PartialEq)]
 pub struct FieldsetProps {
-    legend: String,
-    children: Element,
-    class: Option<String>,
-    legend_class: Option<String>,
-    help_text: Option<String>,
+    /// Legend text displayed at the top of the fieldset
+    pub legend: String,
+    pub children: Element,
+    /// All standard HTML fieldset attributes (disabled, form, name, etc.)
+    #[props(extends = fieldset, extends = GlobalAttributes)]
+    pub attributes: Vec<Attribute>,
 }
 
 #[component]
 pub fn Fieldset(props: FieldsetProps) -> Element {
-    let class = props.class.unwrap_or_default();
-    let legend_class = props.legend_class.unwrap_or_default();
-
     rsx!(
-        fieldset { class: "fieldset {class}",
-            legend { class: "fieldset-legend {legend_class}", "{props.legend}" }
+        fieldset {
+            class: "fieldset",
+            ..props.attributes,
+            legend { class: "fieldset-legend", "{props.legend}" }
             {props.children}
-            match props.help_text {
-                Some(help) => rsx!( p { class: "label", "{help}" } ),
-                None => rsx!(),
-            }
         }
     )
 }

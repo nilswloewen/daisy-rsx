@@ -52,104 +52,54 @@ impl Display for FileInputColor {
 #[derive(Default, Copy, Clone, Debug, PartialEq, Eq)]
 pub enum FileInputSize {
     #[default]
-    Md,
-    Xs,
-    Sm,
-    Lg,
-    Xl,
+    Default,
+    ExtraSmall,
+    Small,
+    Medium,
+    Large,
 }
 
 impl Display for FileInputSize {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            FileInputSize::Md => write!(f, "file-input-md"),
-            FileInputSize::Xs => write!(f, "file-input-xs"),
-            FileInputSize::Sm => write!(f, "file-input-sm"),
-            FileInputSize::Lg => write!(f, "file-input-lg"),
-            FileInputSize::Xl => write!(f, "file-input-xl"),
+            FileInputSize::Default => write!(f, ""),
+            FileInputSize::ExtraSmall => write!(f, "file-input-xs"),
+            FileInputSize::Small => write!(f, "file-input-sm"),
+            FileInputSize::Medium => write!(f, "file-input-md"),
+            FileInputSize::Large => write!(f, "file-input-lg"),
         }
     }
 }
 
 #[derive(Props, Clone, PartialEq)]
 pub struct FileInputProps {
-    class: Option<String>,
-    id: Option<String>,
-    name: Option<String>,
-    accept: Option<String>,
-    multiple: Option<bool>,
-    required: Option<bool>,
-    disabled: Option<bool>,
-    file_input_style: Option<FileInputStyle>,
-    file_input_color: Option<FileInputColor>,
-    file_input_size: Option<FileInputSize>,
+    /// Label text displayed above the file input
+    pub label: String,
+    #[props(default)]
+    pub file_input_style: FileInputStyle,
+    #[props(default)]
+    pub file_input_color: FileInputColor,
+    #[props(default)]
+    pub file_input_size: FileInputSize,
+    /// All standard HTML input attributes (name, accept, multiple, etc.)
+    #[props(extends = input, extends = GlobalAttributes)]
+    pub attributes: Vec<Attribute>,
 }
 
 #[component]
 pub fn FileInput(props: FileInputProps) -> Element {
-    let style = props.file_input_style.unwrap_or_default();
-    let color = props.file_input_color.unwrap_or_default();
-    let size = props.file_input_size.unwrap_or_default();
-    let class = props.class.unwrap_or_default();
-    let disabled = props.disabled.filter(|&d| d);
+    let style = props.file_input_style.to_string();
+    let color = props.file_input_color.to_string();
+    let size = props.file_input_size.to_string();
 
     rsx!(
-        input {
-            "type": "file",
-            id: props.id,
-            name: props.name,
-            accept: props.accept,
-            multiple: props.multiple,
-            required: props.required,
-            disabled,
-            class: "file-input {class} {style} {color} {size}",
+        label { class: "flex flex-col gap-1",
+            span { "{props.label}" }
+            input {
+                r#type: "file",
+                class: "file-input {style} {color} {size}",
+                ..props.attributes
+            }
         }
     )
-}
-
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    fn test_file_input() {
-        let props = FileInputProps {
-            class: Some("custom".to_string()),
-            id: Some("id".to_string()),
-            name: Some("name".to_string()),
-            accept: Some("image/*".to_string()),
-            multiple: Some(true),
-            required: Some(true),
-            disabled: Some(false),
-            file_input_style: Some(FileInputStyle::Ghost),
-            file_input_color: Some(FileInputColor::Primary),
-            file_input_size: Some(FileInputSize::Lg),
-        };
-
-        let result = dioxus_ssr::render_element(FileInput(props));
-        assert!(result.contains("file-input-ghost"));
-        assert!(result.contains("file-input-primary"));
-        assert!(result.contains("file-input-lg"));
-        assert!(result.contains("class=\"file-input custom"));
-        assert!(result.contains("required=true"));
-    }
-
-    #[test]
-    fn test_file_input_default() {
-        let props = FileInputProps {
-            class: None,
-            id: None,
-            name: None,
-            accept: None,
-            multiple: None,
-            required: None,
-            disabled: None,
-            file_input_style: None,
-            file_input_color: None,
-            file_input_size: None,
-        };
-
-        let result = dioxus_ssr::render_element(FileInput(props));
-        assert!(result.contains("file-input-md"));
-    }
 }

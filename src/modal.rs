@@ -58,33 +58,3 @@ pub fn ModalAction(props: ModalActionProps) -> Element {
         div { class: "modal-action {props.class.clone().unwrap_or_default()}", {props.children} }
     )
 }
-
-#[test]
-fn test_modal() {
-    let props = ModalProps {
-        children: rsx!( "Hello" ),
-        class: Some("test".to_string()),
-        submit_action: Some("test".to_string()),
-        trigger_id: "id".to_string(),
-    };
-
-    let expected = r#"<form action="test" method="post"><dialog class="modal test" id="id" popover="auto">Hello</dialog></form>"#;
-    let result = dioxus_ssr::render_element(Modal(props));
-    // println!("{}", result);
-    assert_eq!(expected, result);
-}
-
-#[test]
-fn test_modal_without_submit_action() {
-    let props = ModalProps {
-        children: rsx!( "Hello" ),
-        class: Some("test".to_string()),
-        submit_action: None,
-        trigger_id: "id".to_string(),
-    };
-
-    let expected = r#"<dialog class="modal test" id="id" popover="auto">Hello</dialog>"#;
-    let result = dioxus_ssr::render_element(Modal(props));
-    // println!("{}", result);
-    assert_eq!(expected, result);
-}

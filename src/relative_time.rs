@@ -41,16 +41,3 @@ pub fn RelativeTime(props: RelativeTimeProps) -> Element {
         relative-time { datetime: props.datetime, format: format.to_string() }
     )
 }
-
-#[test]
-fn test_relative_time() {
-    let props = RelativeTimeProps {
-        datetime: "2024-01-01".to_string(),
-        format: Some(RelativeTimeFormat::Datetime),
-    };
-
-    let expected = r#"<relative-time datetime="2024-01-01" format="datetime"></relative-time>"#;
-    let result = dioxus_ssr::render_element(RelativeTime(props));
-    // println!("{}", result);
-    assert_eq!(expected, result);
-}

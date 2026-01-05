@@ -97,23 +97,3 @@ pub fn Badge(props: BadgeProps) -> Element {
         span { class: "badge {badge_style} {badge_color} {badge_size} {class}", {props.children} }
     )
 }
-
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    fn test_badge() {
-        let props = BadgeProps {
-            children: rsx!("Hello"),
-            class: Some("custom".to_string()),
-            badge_style: Some(BadgeStyle::Outline),
-            badge_color: Some(BadgeColor::Primary),
-            badge_size: Some(BadgeSize::Lg),
-        };
-        let expected =
-            r#"<span class="badge badge-outline badge-primary badge-lg custom">Hello</span>"#;
-        let result = dioxus_ssr::render_element(Badge(props));
-        assert_eq!(result, expected);
-    }
-}

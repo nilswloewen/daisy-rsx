@@ -50,7 +50,7 @@ pub fn BlankSlate(props: BlankSlateProps) -> Element {
                     div {
                         Button {
                             button_scheme: ButtonScheme::Primary,
-                            popover_target: "{pa.1}",
+                            popovertarget: "{pa.1}",
                             "{pa.0}"
                         }
                     }
