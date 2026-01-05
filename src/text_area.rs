@@ -43,10 +43,7 @@ pub fn TextArea(props: TextAreaProps) -> Element {
     rsx!(
         label { class: "flex flex-col gap-1",
             span { "{props.label}" }
-            textarea {
-                class: "textarea textarea-bordered {size}",
-                ..props.attributes
-            }
+            textarea { class: "textarea textarea-bordered {size}", ..props.attributes }
         }
     )
 }

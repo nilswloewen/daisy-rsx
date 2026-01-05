@@ -4,10 +4,12 @@ use dioxus::prelude::*;
 
 #[derive(Props, Clone, PartialEq)]
 pub struct ModalProps {
-    trigger_id: String,
-    children: Element,
-    submit_action: Option<String>,
-    class: Option<String>,
+    pub trigger_id: String,
+    pub children: Element,
+    pub submit_action: Option<String>,
+    /// All standard HTML dialog attributes (id, style, etc.)
+    #[props(extends = dialog, extends = GlobalAttributes)]
+    pub attributes: Vec<Attribute>,
 }
 
 #[component]
@@ -16,17 +18,19 @@ pub fn Modal(props: ModalProps) -> Element {
         if let Some(action) = &props.submit_action {
             form { action: "{action}", method: "post",
                 dialog {
-                    class: "modal {props.class.clone().unwrap_or_default()}",
+                    class: "modal",
                     id: "{props.trigger_id}",
                     popover: "auto",
+                    ..props.attributes,
                     {props.children}
                 }
             }
         } else {
             dialog {
-                class: "modal {props.class.clone().unwrap_or_default()}",
+                class: "modal",
                 id: "{props.trigger_id}",
                 popover: "auto",
+                ..props.attributes,
                 {props.children}
             }
         }
@@ -35,26 +39,30 @@ pub fn Modal(props: ModalProps) -> Element {
 
 #[derive(Props, Clone, PartialEq)]
 pub struct ModalBodyProps {
-    children: Element,
-    class: Option<String>,
+    pub children: Element,
+    /// All standard HTML div attributes (id, style, onclick, etc.)
+    #[props(extends = div, extends = GlobalAttributes)]
+    pub attributes: Vec<Attribute>,
 }
 
 #[component]
 pub fn ModalBody(props: ModalBodyProps) -> Element {
     rsx!(
-        div { class: "modal-box {props.class.clone().unwrap_or_default()}", {props.children} }
+        div { class: "modal-box", ..props.attributes, {props.children} }
     )
 }
 
 #[derive(Props, Clone, PartialEq)]
 pub struct ModalActionProps {
-    children: Element,
-    class: Option<String>,
+    pub children: Element,
+    /// All standard HTML div attributes (id, style, onclick, etc.)
+    #[props(extends = div, extends = GlobalAttributes)]
+    pub attributes: Vec<Attribute>,
 }
 
 #[component]
 pub fn ModalAction(props: ModalActionProps) -> Element {
     rsx!(
-        div { class: "modal-action {props.class.clone().unwrap_or_default()}", {props.children} }
+        div { class: "modal-action", ..props.attributes, {props.children} }
     )
 }

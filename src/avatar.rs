@@ -5,35 +5,14 @@ use dioxus::prelude::*;
 /// DaisyUI color pairs for letter avatars. Each tuple contains the background
 /// color variable and its matching foreground color.
 const AVATAR_COLORS: [(&str, &str); 8] = [
-    (
-        "var(--color-primary)",
-        "var(--color-primary-content)",
-    ),
-    (
-        "var(--color-secondary)",
-        "var(--color-secondary-content)",
-    ),
-    (
-        "var(--color-accent)",
-        "var(--color-accent-content)",
-    ),
-    (
-        "var(--color-neutral)",
-        "var(--color-neutral-content)",
-    ),
+    ("var(--color-primary)", "var(--color-primary-content)"),
+    ("var(--color-secondary)", "var(--color-secondary-content)"),
+    ("var(--color-accent)", "var(--color-accent-content)"),
+    ("var(--color-neutral)", "var(--color-neutral-content)"),
     ("var(--color-info)", "var(--color-info-content)"),
-    (
-        "var(--color-success)",
-        "var(--color-success-content)",
-    ),
-    (
-        "var(--color-warning)",
-        "var(--color-warning-content)",
-    ),
-    (
-        "var(--color-error)",
-        "var(--color-error-content)",
-    ),
+    ("var(--color-success)", "var(--color-success-content)"),
+    ("var(--color-warning)", "var(--color-warning-content)"),
+    ("var(--color-error)", "var(--color-error-content)"),
 ];
 
 fn letter_colors(ch: char) -> (&'static str, &'static str) {
@@ -70,18 +49,20 @@ impl AvatarSize {
 
 #[derive(Props, Clone, PartialEq)]
 pub struct AvatarProps {
-    avatar_size: Option<AvatarSize>,
-    avatar_type: Option<AvatarType>,
-    name: Option<String>,
-    _email: Option<String>,
-    image_src: Option<String>,
+    #[props(default)]
+    pub avatar_size: AvatarSize,
+    #[props(default)]
+    pub avatar_type: AvatarType,
+    pub name: Option<String>,
+    pub image_src: Option<String>,
+    /// All standard HTML div attributes (id, style, onclick, etc.)
+    #[props(extends = div, extends = GlobalAttributes)]
+    pub attributes: Vec<Attribute>,
 }
 
 #[component]
 pub fn Avatar(props: AvatarProps) -> Element {
-    let avatar_size = props.avatar_size.unwrap_or_default();
-
-    let avatar_size = avatar_size.to_string();
+    let avatar_size = props.avatar_size.to_string();
 
     // Get the first character of the name, or "?" if the name is empty
     let the_name = props
@@ -95,7 +76,7 @@ pub fn Avatar(props: AvatarProps) -> Element {
 
     if let Some(image) = props.image_src {
         rsx!(
-            div { class: "avatar",
+            div { class: "avatar", ..props.attributes,
                 div { class: "rounded {avatar_size.2}",
                     img {
                         width: avatar_size.0,
@@ -107,8 +88,8 @@ pub fn Avatar(props: AvatarProps) -> Element {
         )
     } else {
         match props.avatar_type {
-            Some(AvatarType::User) => rsx!(
-                div { class: "avatar",
+            AvatarType::User => rsx!(
+                div { class: "avatar", ..props.attributes,
                     div { class: "rounded {avatar_size.2}",
                         svg {
                             "aria-hidden": true,
@@ -132,36 +113,8 @@ pub fn Avatar(props: AvatarProps) -> Element {
                     }
                 }
             ),
-            Some(_) => rsx!(
-                div { class: "avatar",
-                    div { class: "rounded {avatar_size.2}",
-                        svg {
-                            "aria-hidden": true,
-                            xmlns: "http://www.w3.org/2000/svg",
-                            "viewBox": "0 0 50 50",
-                            height: avatar_size.0,
-                            width: avatar_size.1,
-                            rect {
-                                fill: bg_color,
-                                height: "100%",
-                                width: "100%",
-                            }
-                            text {
-                                fill: text_color,
-                                "font-size": "26",
-                                "font-weight": "500",
-                                x: "50%",
-                                y: "55%",
-                                "dominant-baseline": "middle",
-                                "text-anchor": "middle",
-                                {the_name}
-                            }
-                        }
-                    }
-                }
-            ),
-            None => rsx!(
-                div { class: "avatar",
+            AvatarType::Team => rsx!(
+                div { class: "avatar", ..props.attributes,
                     div { class: "rounded {avatar_size.2}",
                         svg {
                             "aria-hidden": true,

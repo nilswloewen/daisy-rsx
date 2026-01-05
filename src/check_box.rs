@@ -76,7 +76,7 @@ pub fn CheckBox(props: CheckBoxProps) -> Element {
             input {
                 r#type: "checkbox",
                 class: "checkbox {scheme} {size}",
-                ..props.attributes
+                ..props.attributes,
             }
             span { "{props.label}" }
         }

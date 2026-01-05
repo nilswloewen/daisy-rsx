@@ -17,44 +17,29 @@ pub struct AppLayoutProps {
 pub fn AppLayout(props: AppLayoutProps) -> Element {
     rsx!(
         head {
-            title {
-                "{props.title}"
-            }
-            meta {
-                charset: "utf-8"
-            }
-            meta {
-                "http-equiv": "X-UA-Compatible",
-                content: "IE=edge"
-            }
+            title { "{props.title}" }
+            meta { charset: "utf-8" }
+            meta { "http-equiv": "X-UA-Compatible", content: "IE=edge" }
             meta {
                 name: "viewport",
-                content: "width=device-width, initial-scale=1"
+                content: "width=device-width, initial-scale=1",
             }
             for href in &props.stylesheets {
-                link {
-                    rel: "stylesheet",
-                    href: "{href}",
-                    "type": "text/css"
-                }
+                link { rel: "stylesheet", href: "{href}", "type": "text/css" }
             }
             if let Some(js_href) = props.js_href {
-                script {
-                    "type": "module",
-                    src: "{js_href}"
-                }
+                script { "type": "module", src: "{js_href}" }
             }
             if let Some(fav_icon_src) = props.fav_icon_src {
                 link {
                     rel: "icon",
                     "type": "image/svg+xml",
-                    href: "{fav_icon_src}"
+                    href: "{fav_icon_src}",
                 }
             }
         }
         body {
-            div {
-                class: "flex h-screen overflow-hidden",
+            div { class: "flex h-screen overflow-hidden",
                 nav {
                     id: "sidebar",
                     class: "
@@ -76,26 +61,13 @@ pub fn AppLayout(props: AppLayoutProps) -> Element {
                         lg:inset-auto
                         lg:transform-none
                         z-20",
-                    div {
-                        class: "flex items-center p-4",
-                        {props.sidebar_header}
-                    }
-                    div {
-                        class: "flex-1 overflow-y-auto",
-                        {props.sidebar}
-                    }
-                    div {
-                        class: "p-4",
-                        {props.sidebar_footer}
-                    }
+                    div { class: "flex items-center p-4", {props.sidebar_header} }
+                    div { class: "flex-1 overflow-y-auto", {props.sidebar} }
+                    div { class: "p-4", {props.sidebar_footer} }
                 }
-                main {
-                    id: "main-content",
-                    class: "flex-1 flex flex-col",
-                    header {
-                        class: "flex items-center p-4 border-b border-base-300",
-                        button {
-                            id: "toggleButton",
+                main { id: "main-content", class: "flex-1 flex flex-col",
+                    header { class: "flex items-center p-4 border-b border-base-300",
+                        button { id: "toggleButton",
                             svg {
                                 xmlns: "http://www.w3.org/2000/svg",
                                 width: "24",
@@ -114,17 +86,12 @@ pub fn AppLayout(props: AppLayoutProps) -> Element {
                                     y: "3",
                                     rx: "2",
                                 }
-                                path {
-                                    d: "M9 3v18",
-                                }
+                                path { d: "M9 3v18" }
                             }
                         }
                         {props.header}
                     }
-                    section {
-                        class: "flex-1 overflow-y-auto",
-                        {props.children}
-                    }
+                    section { class: "flex-1 overflow-y-auto", {props.children} }
                 }
             }
         }

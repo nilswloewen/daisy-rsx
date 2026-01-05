@@ -4,43 +4,32 @@ use dioxus::prelude::*;
 
 #[derive(Props, Clone, PartialEq)]
 pub struct CardProps {
-    class: Option<String>,
-    children: Element,
-    clickable_link: Option<String>,
-    popover_target: Option<String>,
+    pub children: Element,
+    /// All standard HTML div attributes (id, style, onclick, etc.)
+    #[props(extends = div, extends = GlobalAttributes)]
+    pub attributes: Vec<Attribute>,
 }
 
 #[component]
 pub fn Card(props: CardProps) -> Element {
-    let class = if let Some(class) = props.class {
-        class
-    } else {
-        "".to_string()
-    };
-
-    let class = format!("card {}", class);
-
     rsx!(
-        div {
-            class: "{class}",
-            "data-target": props.popover_target,
-            "data-clickable-link": props.clickable_link,
-            {props.children}
-        }
+        div { class: "card", ..props.attributes, {props.children} }
     )
 }
 
 #[derive(Props, Clone, PartialEq)]
-pub struct CardHeadersProps {
-    class: Option<String>,
-    title: String,
-    children: Element,
+pub struct CardHeaderProps {
+    pub title: String,
+    pub children: Element,
+    /// All standard HTML div attributes (id, style, onclick, etc.)
+    #[props(extends = div, extends = GlobalAttributes)]
+    pub attributes: Vec<Attribute>,
 }
 
 #[component]
-pub fn CardHeader(props: CardHeadersProps) -> Element {
+pub fn CardHeader(props: CardHeaderProps) -> Element {
     rsx!(
-        div { class: "card-header flex items-center {props.class.clone().unwrap_or_default()}",
+        div { class: "card-header flex items-center", ..props.attributes,
             h3 { class: "card-title overflow-hidden", "{props.title}" }
             {props.children}
         }
@@ -49,13 +38,15 @@ pub fn CardHeader(props: CardHeadersProps) -> Element {
 
 #[derive(Props, Clone, PartialEq)]
 pub struct CardBodyProps {
-    class: Option<String>,
-    children: Element,
+    pub children: Element,
+    /// All standard HTML div attributes (id, style, onclick, etc.)
+    #[props(extends = div, extends = GlobalAttributes)]
+    pub attributes: Vec<Attribute>,
 }
 
 #[component]
 pub fn CardBody(props: CardBodyProps) -> Element {
     rsx!(
-        div { class: "card-body {props.class.clone().unwrap_or_default()}", {props.children} }
+        div { class: "card-body", ..props.attributes, {props.children} }
     )
 }

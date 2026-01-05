@@ -15,58 +15,40 @@ pub struct BlankSlateProps {
 #[component]
 pub fn BlankSlate(props: BlankSlateProps) -> Element {
     rsx!(
-        div {
-            class: "mt-4 flex flex-col justify-center items-center",
+        div { class: "mt-4 flex flex-col justify-center items-center",
             img {
                 class: "mb-4 svg-icon",
                 src: "{props.visual}",
                 width: "100px",
-                height: "100px"
+                height: "100px",
             }
-            h2 {
-                class: "text-center mb-4  max-w-prose",
-                "{props.heading}"
-            }
-            p {
-                class: "mb-4  max-w-prose text-center",
-                "{props.description}"
-            }
+            h2 { class: "text-center mb-4  max-w-prose", "{props.heading}" }
+            p { class: "mb-4  max-w-prose text-center", "{props.description}" }
             match &props.primary_action {
-                Some(pa) => rsx!(
+                Some(pa) => rsx! {
                     div {
-                        a {
-                            href: "{pa.1}",
-                            span {
-                                class: "Button-label",
-                                "{pa.0}"
-                            }
+                        a { href: "{pa.1}",
+                            span { class: "Button-label", "{pa.0}" }
                         }
                     }
-                 ),
-                None => rsx!()
+                },
+                None => rsx! {},
             }
             match props.primary_action_drawer {
-                Some(pa) => rsx!(
+                Some(pa) => rsx! {
                     div {
-                        Button {
-                            button_scheme: ButtonScheme::Primary,
-                            popovertarget: "{pa.1}",
-                            "{pa.0}"
-                        }
+                        Button { button_scheme: ButtonScheme::Primary, popovertarget: "{pa.1}", "{pa.0}" }
                     }
-                 ),
-                None => rsx!()
+                },
+                None => rsx! {},
             }
             match props.secondary_action {
-                Some(pa) => rsx!(
+                Some(pa) => rsx! {
                     div {
-                        a {
-                            href: "{pa.1}",
-                            "{pa.0}"
-                        }
+                        a { href: "{pa.1}", "{pa.0}" }
                     }
-                 ),
-                None => rsx!()
+                },
+                None => rsx! {},
             }
         }
     )

@@ -10,38 +10,22 @@ pub struct PaginationProps {
 #[component]
 pub fn Pagination(props: PaginationProps) -> Element {
     rsx!(
-        nav {
-            class: "paginate-container",
-            "aria-label": "Pagination",
-            div {
-                class: "pagination",
+        nav { class: "paginate-container", "aria-label": "Pagination",
+            div { class: "pagination",
                 if let Some(url) = props.prev_page_url {
-                        a {
-                            class: "previous_page",
-                            rel: "previous",
-                            href: "{url}",
-                            "Previous"
-                        }
-                } else {
-                    span {
+                    a {
                         class: "previous_page",
-                        "aria-disabled": "true",
+                        rel: "previous",
+                        href: "{url}",
                         "Previous"
                     }
+                } else {
+                    span { class: "previous_page", "aria-disabled": "true", "Previous" }
                 }
                 if let Some(url) = props.next_page_url {
-                        a {
-                            class: "next_page",
-                            rel: "next",
-                            href: "{url}",
-                            "Next"
-                        }
+                    a { class: "next_page", rel: "next", href: "{url}", "Next" }
                 } else {
-                        span {
-                            class: "next_page",
-                            "aria-disabled": "true",
-                            "Next"
-                        }
+                    span { class: "next_page", "aria-disabled": "true", "Next" }
                 }
             }
         }

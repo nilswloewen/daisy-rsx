@@ -77,7 +77,7 @@ pub fn Range(props: RangeProps) -> Element {
             input {
                 r#type: "range",
                 class: "range {color} {size}",
-                ..props.attributes
+                ..props.attributes,
             }
         }
     )

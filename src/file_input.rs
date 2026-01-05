@@ -98,7 +98,7 @@ pub fn FileInput(props: FileInputProps) -> Element {
             input {
                 r#type: "file",
                 class: "file-input {style} {color} {size}",
-                ..props.attributes
+                ..props.attributes,
             }
         }
     )

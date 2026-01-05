@@ -44,11 +44,7 @@ pub fn Select(props: SelectProps) -> Element {
     rsx!(
         label { class: "flex flex-col gap-1",
             span { "{props.label}" }
-            select {
-                class: "select select-bordered {size}",
-                ..props.attributes,
-                {props.children}
-            }
+            select { class: "select select-bordered {size}", ..props.attributes, {props.children} }
         }
     )
 }
@@ -64,9 +60,6 @@ pub struct OptionProps {
 #[component]
 pub fn SelectOption(props: OptionProps) -> Element {
     rsx!(
-        option {
-            ..props.attributes,
-            {props.children}
-        }
+        option { ..props.attributes,{props.children} }
     )
 }

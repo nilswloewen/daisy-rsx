@@ -131,10 +131,6 @@ pub fn Button(props: ButtonProps) -> Element {
     let style = props.button_style.to_string();
 
     rsx!(
-        button {
-            class: "btn {scheme} {size} {shape} {style}",
-            ..props.attributes,
-            {props.children}
-        }
+        button { class: "btn {scheme} {size} {shape} {style}", ..props.attributes, {props.children} }
     )
 }

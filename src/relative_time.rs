@@ -38,6 +38,10 @@ pub fn RelativeTime(props: RelativeTimeProps) -> Element {
     let format = props.format.unwrap_or_default();
 
     rsx!(
-        relative-time { datetime: props.datetime, format: format.to_string() }
+        relative
+            - time {
+                datetime: props.datetime,
+                format: format.to_string()
+            }
     )
 }

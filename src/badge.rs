@@ -79,21 +79,25 @@ impl Display for BadgeSize {
 
 #[derive(Props, Clone, PartialEq)]
 pub struct BadgeProps {
-    children: Element,
-    class: Option<String>,
-    badge_style: Option<BadgeStyle>,
-    badge_color: Option<BadgeColor>,
-    badge_size: Option<BadgeSize>,
+    pub children: Element,
+    #[props(default)]
+    pub badge_style: BadgeStyle,
+    #[props(default)]
+    pub badge_color: BadgeColor,
+    #[props(default)]
+    pub badge_size: BadgeSize,
+    /// All standard HTML span attributes (id, style, onclick, etc.)
+    #[props(extends = span, extends = GlobalAttributes)]
+    pub attributes: Vec<Attribute>,
 }
 
 #[component]
 pub fn Badge(props: BadgeProps) -> Element {
-    let badge_style = props.badge_style.unwrap_or_default();
-    let badge_color = props.badge_color.unwrap_or_default();
-    let badge_size = props.badge_size.unwrap_or_default();
-    let class = props.class.unwrap_or_default();
+    let style = props.badge_style.to_string();
+    let color = props.badge_color.to_string();
+    let size = props.badge_size.to_string();
 
     rsx!(
-        span { class: "badge {badge_style} {badge_color} {badge_size} {class}", {props.children} }
+        span { class: "badge {style} {color} {size}", ..props.attributes, {props.children} }
     )
 }

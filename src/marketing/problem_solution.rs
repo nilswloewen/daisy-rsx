@@ -9,25 +9,13 @@ pub fn ProblemSolution(
     class: Option<String>,
 ) -> Element {
     rsx! {
-        section {
-            class: format!("md:flex lg:max-w-5xl gap-8 w-full {}", class.unwrap_or("".to_string())),
-            div {
-                class: "flex-1",
-                h1 {
-                    class: "text-primary sm:text-3xl text-2xl font-medium",
-                    "{title}"
-                }
-                p {
-                    class: "py-6",
-                    "{problem}"
-                }
-                p {
-                    class: "py-6",
-                    "{solution}"
-                }
+        section { class: format!("md:flex lg:max-w-5xl gap-8 w-full {}", class.unwrap_or("".to_string())),
+            div { class: "flex-1",
+                h1 { class: "text-primary sm:text-3xl text-2xl font-medium", "{title}" }
+                p { class: "py-6", "{problem}" }
+                p { class: "py-6", "{solution}" }
             }
-            div {
-                class: "flex-1",
+            div { class: "flex-1",
                 img {
                     width: "560",
                     height: "315",

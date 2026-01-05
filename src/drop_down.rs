@@ -27,21 +27,25 @@ impl Display for Direction {
 
 #[derive(Props, Clone, PartialEq)]
 pub struct DropDownProps {
-    children: Element,
-    carat: Option<bool>,
-    button_text: String,
-    class: Option<String>,
-    direction: Option<Direction>,
-    prefix_image_src: Option<String>,
-    suffix_image_src: Option<String>,
+    pub children: Element,
+    pub button_text: String,
+    #[props(default)]
+    pub carat: bool,
+    #[props(default)]
+    pub direction: Direction,
+    pub prefix_image_src: Option<String>,
+    pub suffix_image_src: Option<String>,
+    /// All standard HTML div attributes (id, style, onclick, etc.)
+    #[props(extends = div, extends = GlobalAttributes)]
+    pub attributes: Vec<Attribute>,
 }
 
 #[component]
 pub fn DropDown(props: DropDownProps) -> Element {
-    let direction = props.direction.unwrap_or_default();
+    let direction = props.direction.to_string();
 
     rsx!(
-        div { class: "dropdown {props.class.clone().unwrap_or_default()} {direction}",
+        div { class: "dropdown {direction}", ..props.attributes,
             label {
                 tabindex: "0",
                 class: "btn btn-default btn-sm m-1 w-full flex flex-nowrap justify-between",
@@ -52,7 +56,7 @@ pub fn DropDown(props: DropDownProps) -> Element {
                 span { class: "truncate", "{props.button_text}" }
                 if let Some(img_src) = props.suffix_image_src {
                     img { src: "{img_src}", class: "ml-2", width: "12" }
-                } else if props.carat.is_some() && props.carat.unwrap() {
+                } else if props.carat {
                     div { class: "dropdown-caret" }
                 }
             }
@@ -67,39 +71,17 @@ pub fn DropDown(props: DropDownProps) -> Element {
 
 #[derive(Props, Clone, PartialEq)]
 pub struct DropDownLinkProps {
-    href: String,
-    target: Option<String>,
-    popover_target: Option<String>,
-    class: Option<String>,
-    children: Element,
+    pub children: Element,
+    /// All standard HTML anchor attributes (href, target, rel, onclick, etc.)
+    #[props(extends = a, extends = GlobalAttributes)]
+    pub attributes: Vec<Attribute>,
 }
 
 #[component]
 pub fn DropDownLink(props: DropDownLinkProps) -> Element {
-    let class = format!("dropdown-item {}", props.class.unwrap_or_default());
-
-    if let Some(trigger) = &props.popover_target {
-        rsx!(
-            li {
-                a {
-                    class: "{class}",
-                    "data-target": "{trigger}",
-                    target: props.target,
-                    href: "{props.href}",
-                    {props.children}
-                }
-            }
-        )
-    } else {
-        rsx!(
-            li {
-                a {
-                    class: "{class}",
-                    target: props.target,
-                    href: "{props.href}",
-                    {props.children}
-                }
-            }
-        )
-    }
+    rsx!(
+        li {
+            a { class: "dropdown-item", ..props.attributes, {props.children} }
+        }
+    )
 }

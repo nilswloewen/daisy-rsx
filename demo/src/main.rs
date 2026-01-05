@@ -1,33 +1,5 @@
 #![allow(non_snake_case)]
 
-use daisy_rsx::{
-    Accordian,
-    AppLayout,
-    Alert, AlertColor,
-    Avatar, AvatarSize, AvatarType,
-    Badge, BadgeColor, BadgeSize, BadgeStyle,
-    BlankSlate,
-    Breadcrumb, BreadcrumbItem,
-    Button, ButtonScheme, ButtonShape, ButtonSize, ButtonStyle,
-    Card, CardBody, CardHeader,
-    CheckBox, CheckBoxScheme,
-    Drawer, DrawerBody, DrawerFooter,
-    Direction, DropDown, DropDownLink,
-    Fieldset,
-    FileInput, FileInputColor,
-    Input,
-    Modal, ModalAction, ModalBody,
-    NavGroup, NavItem,
-    Pagination,
-    Range, RangeColor,
-    RelativeTime, RelativeTimeFormat,
-    Select, SelectOption,
-    TabContainer, TabPanel,
-    TextArea,
-    TimeLine, TimeLineBadge, TimeLineBody,
-    Timeline, TimelineDirection, TimelineEnd, TimelineItem, TimelineMiddle, TimelineStart,
-    ToolTip, ToolTipColor,
-};
 use daisy_rsx::marketing::{
     benefits::Benefits,
     customer_logos::Customers,
@@ -44,6 +16,17 @@ use daisy_rsx::marketing::{
     testamonials::Testamonials,
     video_hero::VideoHero,
     webinar::WebinarHeader,
+};
+use daisy_rsx::{
+    Accordian, Alert, AlertColor, AppLayout, Avatar, AvatarSize, AvatarType, Badge, BadgeColor,
+    BadgeSize, BadgeStyle, BlankSlate, Breadcrumb, BreadcrumbItem, Button, ButtonScheme,
+    ButtonShape, ButtonSize, ButtonStyle, Card, CardBody, CardHeader, CheckBox, CheckBoxScheme,
+    Direction, Drawer, DrawerBody, DrawerFooter, DropDown, DropDownLink, Fieldset, FileInput,
+    FileInputColor, Input, Loading, LoadingColor, LoadingSize, LoadingType, Modal, ModalAction,
+    ModalBody, NavGroup, NavItem, Pagination, Range, RangeColor, RelativeTime, RelativeTimeFormat,
+    Select, SelectOption, TabContainer, TabPanel, TextArea, TimeLine, TimeLineBadge, TimeLineBody,
+    Timeline, TimelineDirection, TimelineEnd, TimelineItem, TimelineMiddle, TimelineStart, ToolTip,
+    ToolTipColor,
 };
 use dioxus::prelude::*;
 
@@ -71,9 +54,7 @@ fn Section(title: String, description: String, children: Element) -> Element {
                 h2 { "{title}" }
                 p { class: "text-base-content/70", "{description}" }
             }
-            div { class: "space-y-8",
-                {children}
-            }
+            div { class: "space-y-8", {children} }
         }
     }
 }
@@ -104,21 +85,57 @@ pub fn DaisyRsxKitchenSink() -> Element {
                 NavGroup {
                     heading: "Components".to_string(),
                     content: rsx! {
-                        NavItem { href: "#buttons".to_string(), icon: HEADER_SVG.to_string(), title: "Buttons & Actions".to_string() }
-                        NavItem { href: "#feedback".to_string(), icon: HEADER_SVG.to_string(), title: "Feedback & Alerts".to_string() }
-                        NavItem { href: "#forms".to_string(), icon: HEADER_SVG.to_string(), title: "Form Elements".to_string() }
-                        NavItem { href: "#data".to_string(), icon: HEADER_SVG.to_string(), title: "Data Display".to_string() }
-                        NavItem { href: "#navigation".to_string(), icon: HEADER_SVG.to_string(), title: "Navigation".to_string() }
-                        NavItem { href: "#overlays".to_string(), icon: HEADER_SVG.to_string(), title: "Overlays & Modals".to_string() }
-                        NavItem { href: "#timelines".to_string(), icon: HEADER_SVG.to_string(), title: "Timelines".to_string() }
-                        NavItem { href: "#utility".to_string(), icon: HEADER_SVG.to_string(), title: "Utility".to_string() }
-                    }
+                        NavItem {
+                            href: "#buttons".to_string(),
+                            icon: HEADER_SVG.to_string(),
+                            title: "Buttons & Actions".to_string(),
+                        }
+                        NavItem {
+                            href: "#feedback".to_string(),
+                            icon: HEADER_SVG.to_string(),
+                            title: "Feedback & Alerts".to_string(),
+                        }
+                        NavItem {
+                            href: "#forms".to_string(),
+                            icon: HEADER_SVG.to_string(),
+                            title: "Form Elements".to_string(),
+                        }
+                        NavItem {
+                            href: "#data".to_string(),
+                            icon: HEADER_SVG.to_string(),
+                            title: "Data Display".to_string(),
+                        }
+                        NavItem {
+                            href: "#navigation".to_string(),
+                            icon: HEADER_SVG.to_string(),
+                            title: "Navigation".to_string(),
+                        }
+                        NavItem {
+                            href: "#overlays".to_string(),
+                            icon: HEADER_SVG.to_string(),
+                            title: "Overlays & Modals".to_string(),
+                        }
+                        NavItem {
+                            href: "#timelines".to_string(),
+                            icon: HEADER_SVG.to_string(),
+                            title: "Timelines".to_string(),
+                        }
+                        NavItem {
+                            href: "#utility".to_string(),
+                            icon: HEADER_SVG.to_string(),
+                            title: "Utility".to_string(),
+                        }
+                    },
                 }
                 NavGroup {
                     heading: "Marketing".to_string(),
                     content: rsx! {
-                        NavItem { href: "#marketing".to_string(), icon: HEADER_SVG.to_string(), title: "Marketing Components".to_string() }
-                    }
+                        NavItem {
+                            href: "#marketing".to_string(),
+                            icon: HEADER_SVG.to_string(),
+                            title: "Marketing Components".to_string(),
+                        }
+                    },
                 }
             },
             sidebar_footer: rsx! {
@@ -189,16 +206,24 @@ pub fn DaisyRsxKitchenSink() -> Element {
                             ToolTip { text: "Default tooltip".to_string(),
                                 Button { "Hover me" }
                             }
-                            ToolTip { text: "Info tooltip".to_string(), alert_color: ToolTipColor::Info,
+                            ToolTip {
+                                text: "Info tooltip".to_string(),
+                                tooltip_color: ToolTipColor::Info,
                                 Button { button_scheme: ButtonScheme::Info, "Info" }
                             }
-                            ToolTip { text: "Success tooltip".to_string(), alert_color: ToolTipColor::Success,
+                            ToolTip {
+                                text: "Success tooltip".to_string(),
+                                tooltip_color: ToolTipColor::Success,
                                 Button { button_scheme: ButtonScheme::Success, "Success" }
                             }
-                            ToolTip { text: "Warning tooltip".to_string(), alert_color: ToolTipColor::Warn,
+                            ToolTip {
+                                text: "Warning tooltip".to_string(),
+                                tooltip_color: ToolTipColor::Warn,
                                 Button { button_scheme: ButtonScheme::Warning, "Warning" }
                             }
-                            ToolTip { text: "Error tooltip".to_string(), alert_color: ToolTipColor::Error,
+                            ToolTip {
+                                text: "Error tooltip".to_string(),
+                                tooltip_color: ToolTipColor::Error,
                                 Button { button_scheme: ButtonScheme::Error, "Error" }
                             }
                         }
@@ -207,17 +232,21 @@ pub fn DaisyRsxKitchenSink() -> Element {
                     ComponentDemo { label: "DropDown".to_string(),
                         div { class: "flex gap-4",
                             DropDown { button_text: "Select Option".to_string(),
-                                DropDownLink { href: "#".to_string(), "Option 1" }
-                                DropDownLink { href: "#".to_string(), "Option 2" }
-                                DropDownLink { href: "#".to_string(), "Option 3" }
+                                DropDownLink { href: "#", "Option 1" }
+                                DropDownLink { href: "#", "Option 2" }
+                                DropDownLink { href: "#", "Option 3" }
                             }
-                            DropDown { button_text: "With Carat".to_string(), carat: true,
-                                DropDownLink { href: "#".to_string(), "Item A" }
-                                DropDownLink { href: "#".to_string(), "Item B" }
+                            DropDown {
+                                button_text: "With Carat".to_string(),
+                                carat: true,
+                                DropDownLink { href: "#", "Item A" }
+                                DropDownLink { href: "#", "Item B" }
                             }
-                            DropDown { button_text: "Direction Top".to_string(), direction: Direction::Top,
-                                DropDownLink { href: "#".to_string(), "Top Item 1" }
-                                DropDownLink { href: "#".to_string(), "Top Item 2" }
+                            DropDown {
+                                button_text: "Direction Top".to_string(),
+                                direction: Direction::Top,
+                                DropDownLink { href: "#", "Top Item 1" }
+                                DropDownLink { href: "#", "Top Item 2" }
                             }
                         }
                     }
@@ -233,10 +262,18 @@ pub fn DaisyRsxKitchenSink() -> Element {
 
                     ComponentDemo { label: "Alert".to_string(),
                         div { class: "flex flex-col gap-2",
-                            Alert { alert_color: AlertColor::Info, "This is an info alert - providing helpful information." }
-                            Alert { alert_color: AlertColor::Success, "This is a success alert - operation completed!" }
-                            Alert { alert_color: AlertColor::Warn, "This is a warning alert - proceed with caution." }
-                            Alert { alert_color: AlertColor::Error, "This is an error alert - something went wrong." }
+                            Alert { alert_color: AlertColor::Info,
+                                "This is an info alert - providing helpful information."
+                            }
+                            Alert { alert_color: AlertColor::Success,
+                                "This is a success alert - operation completed!"
+                            }
+                            Alert { alert_color: AlertColor::Warn,
+                                "This is a warning alert - proceed with caution."
+                            }
+                            Alert { alert_color: AlertColor::Error,
+                                "This is an error alert - something went wrong."
+                            }
                         }
                     }
 
@@ -277,9 +314,119 @@ pub fn DaisyRsxKitchenSink() -> Element {
                         BlankSlate {
                             heading: "No items found".to_string(),
                             visual: HEADER_SVG.to_string(),
-                            description: "Get started by creating your first item. Click the button below to begin.".to_string(),
+                            description: "Get started by creating your first item. Click the button below to begin."
+                                .to_string(),
                             primary_action: ("Create Item".to_string(), "#".to_string()),
                             secondary_action: ("Learn More".to_string(), "#".to_string()),
+                        }
+                    }
+
+                    ComponentDemo { label: "Loading Types".to_string(),
+                        div { class: "flex flex-wrap gap-6 items-center",
+                            div { class: "flex flex-col items-center gap-2",
+                                Loading {
+                                    loading_type: LoadingType::Spinner,
+                                    loading_size: LoadingSize::Large,
+                                }
+                                span { class: "text-sm", "Spinner" }
+                            }
+                            div { class: "flex flex-col items-center gap-2",
+                                Loading {
+                                    loading_type: LoadingType::Dots,
+                                    loading_size: LoadingSize::Large,
+                                }
+                                span { class: "text-sm", "Dots" }
+                            }
+                            div { class: "flex flex-col items-center gap-2",
+                                Loading {
+                                    loading_type: LoadingType::Ring,
+                                    loading_size: LoadingSize::Large,
+                                }
+                                span { class: "text-sm", "Ring" }
+                            }
+                            div { class: "flex flex-col items-center gap-2",
+                                Loading {
+                                    loading_type: LoadingType::Ball,
+                                    loading_size: LoadingSize::Large,
+                                }
+                                span { class: "text-sm", "Ball" }
+                            }
+                            div { class: "flex flex-col items-center gap-2",
+                                Loading {
+                                    loading_type: LoadingType::Bars,
+                                    loading_size: LoadingSize::Large,
+                                }
+                                span { class: "text-sm", "Bars" }
+                            }
+                            div { class: "flex flex-col items-center gap-2",
+                                Loading {
+                                    loading_type: LoadingType::Infinity,
+                                    loading_size: LoadingSize::Large,
+                                }
+                                span { class: "text-sm", "Infinity" }
+                            }
+                        }
+                    }
+
+                    ComponentDemo { label: "Loading Sizes".to_string(),
+                        div { class: "flex flex-wrap gap-4 items-end",
+                            div { class: "flex flex-col items-center gap-2",
+                                Loading { loading_size: LoadingSize::ExtraSmall }
+                                span { class: "text-sm", "XS" }
+                            }
+                            div { class: "flex flex-col items-center gap-2",
+                                Loading { loading_size: LoadingSize::Small }
+                                span { class: "text-sm", "Small" }
+                            }
+                            div { class: "flex flex-col items-center gap-2",
+                                Loading { loading_size: LoadingSize::Medium }
+                                span { class: "text-sm", "Medium" }
+                            }
+                            div { class: "flex flex-col items-center gap-2",
+                                Loading { loading_size: LoadingSize::Large }
+                                span { class: "text-sm", "Large" }
+                            }
+                            div { class: "flex flex-col items-center gap-2",
+                                Loading { loading_size: LoadingSize::ExtraLarge }
+                                span { class: "text-sm", "XL" }
+                            }
+                        }
+                    }
+
+                    ComponentDemo { label: "Loading Colors".to_string(),
+                        div { class: "flex flex-wrap gap-4 items-center",
+                            Loading {
+                                loading_size: LoadingSize::Large,
+                                loading_color: LoadingColor::Primary,
+                            }
+                            Loading {
+                                loading_size: LoadingSize::Large,
+                                loading_color: LoadingColor::Secondary,
+                            }
+                            Loading {
+                                loading_size: LoadingSize::Large,
+                                loading_color: LoadingColor::Accent,
+                            }
+                            Loading {
+                                loading_size: LoadingSize::Large,
+                                loading_color: LoadingColor::Neutral,
+                            }
+                            Loading {
+                                loading_size: LoadingSize::Large,
+                                loading_color: LoadingColor::Info,
+                            }
+                            Loading {
+                                loading_size: LoadingSize::Large,
+                                loading_color: LoadingColor::Success,
+                            }
+                            Loading {
+                                loading_size: LoadingSize::Large,
+                                loading_color: LoadingColor::Warning,
+                            }
+                            Loading {
+                                loading_size: LoadingSize::Large,
+                                loading_color: LoadingColor::Error,
+                            }
                         }
                     }
                 }
@@ -294,32 +441,49 @@ pub fn DaisyRsxKitchenSink() -> Element {
 
                     ComponentDemo { label: "Input Types".to_string(),
                         div { class: "grid grid-cols-1 md:grid-cols-2 gap-4",
-                            Input { label: "Text Input", name: "text-input", placeholder: "Enter text..." }
-                            Input { label: "Email", name: "email-input", r#type: "email", placeholder: "email@example.com" }
-                            Input { label: "Password", name: "password-input", r#type: "password", placeholder: "********" }
-                            Input { label: "Number", name: "number-input", r#type: "number", placeholder: "0" }
+                            Input {
+                                label: "Text Input",
+                                name: "text-input",
+                                placeholder: "Enter text...",
+                            }
+                            Input {
+                                label: "Email",
+                                name: "email-input",
+                                r#type: "email",
+                                placeholder: "email@example.com",
+                            }
+                            Input {
+                                label: "Password",
+                                name: "password-input",
+                                r#type: "password",
+                                placeholder: "********",
+                            }
+                            Input {
+                                label: "Number",
+                                name: "number-input",
+                                r#type: "number",
+                                placeholder: "0",
+                            }
                         }
                     }
 
                     ComponentDemo { label: "Input with Fieldset".to_string(),
-                        Fieldset {
-                            legend: "Username",
+                        Fieldset { legend: "Username",
                             input {
                                 r#type: "text",
                                 name: "username",
                                 class: "input",
-                                placeholder: "Enter username"
+                                placeholder: "Enter username",
                             }
                         }
                     }
 
                     ComponentDemo { label: "Input with Fieldset Legend".to_string(),
-                        Fieldset {
-                            legend: "What is your name?",
+                        Fieldset { legend: "What is your name?",
                             input {
                                 r#type: "text",
                                 class: "input",
-                                placeholder: "Type here"
+                                placeholder: "Type here",
                             }
                         }
                     }
@@ -329,14 +493,12 @@ pub fn DaisyRsxKitchenSink() -> Element {
                             label: "Description",
                             name: "textarea-demo",
                             placeholder: "Enter your description here...",
-                            rows: "4"
+                            rows: "4",
                         }
                     }
 
                     ComponentDemo { label: "Select".to_string(),
-                        Select {
-                            label: "Choose an option",
-                            name: "select-demo",
+                        Select { label: "Choose an option", name: "select-demo",
                             SelectOption { value: "", "-- Select --" }
                             SelectOption { value: "1", "Option 1" }
                             SelectOption { value: "2", "Option 2" }
@@ -346,9 +508,23 @@ pub fn DaisyRsxKitchenSink() -> Element {
 
                     ComponentDemo { label: "CheckBox".to_string(),
                         div { class: "flex flex-col gap-3",
-                            CheckBox { label: "Default checkbox", name: "check1", value: "1" }
-                            CheckBox { label: "Primary checkbox", name: "check2", value: "2", checkbox_scheme: CheckBoxScheme::Primary }
-                            CheckBox { label: "Checked checkbox", name: "check3", value: "3", checked: true }
+                            CheckBox {
+                                label: "Default checkbox",
+                                name: "check1",
+                                value: "1",
+                            }
+                            CheckBox {
+                                label: "Primary checkbox",
+                                name: "check2",
+                                value: "2",
+                                checkbox_scheme: CheckBoxScheme::Primary,
+                            }
+                            CheckBox {
+                                label: "Checked checkbox",
+                                name: "check3",
+                                value: "3",
+                                checked: true,
+                            }
                         }
                     }
 
@@ -359,7 +535,7 @@ pub fn DaisyRsxKitchenSink() -> Element {
                                 name: "range-default",
                                 min: "0",
                                 max: "100",
-                                value: "50"
+                                value: "50",
                             }
                             Range {
                                 label: "Success Range",
@@ -367,7 +543,7 @@ pub fn DaisyRsxKitchenSink() -> Element {
                                 min: "0",
                                 max: "100",
                                 value: "75",
-                                range_color: RangeColor::Success
+                                range_color: RangeColor::Success,
                             }
                             Range {
                                 label: "Error Range",
@@ -375,7 +551,7 @@ pub fn DaisyRsxKitchenSink() -> Element {
                                 min: "0",
                                 max: "100",
                                 value: "25",
-                                range_color: RangeColor::Error
+                                range_color: RangeColor::Error,
                             }
                         }
                     }
@@ -383,18 +559,38 @@ pub fn DaisyRsxKitchenSink() -> Element {
                     ComponentDemo { label: "FileInput".to_string(),
                         div { class: "space-y-4",
                             FileInput { label: "Default", name: "file-default" }
-                            FileInput { label: "Primary", name: "file-primary", file_input_color: FileInputColor::Primary }
-                            FileInput { label: "Secondary", name: "file-secondary", file_input_color: FileInputColor::Secondary }
+                            FileInput {
+                                label: "Primary",
+                                name: "file-primary",
+                                file_input_color: FileInputColor::Primary,
+                            }
+                            FileInput {
+                                label: "Secondary",
+                                name: "file-secondary",
+                                file_input_color: FileInputColor::Secondary,
+                            }
                         }
                     }
 
                     ComponentDemo { label: "Fieldset".to_string(),
-                        Fieldset {
-                            legend: "User Information",
+                        Fieldset { legend: "User Information",
                             div { class: "space-y-4",
-                                Input { label: "First Name", name: "fname", placeholder: "John" }
-                                Input { label: "Last Name", name: "lname", placeholder: "Doe" }
-                                Input { label: "Email", name: "email", r#type: "email", placeholder: "john@example.com" }
+                                Input {
+                                    label: "First Name",
+                                    name: "fname",
+                                    placeholder: "John",
+                                }
+                                Input {
+                                    label: "Last Name",
+                                    name: "lname",
+                                    placeholder: "Doe",
+                                }
+                                Input {
+                                    label: "Email",
+                                    name: "email",
+                                    r#type: "email",
+                                    placeholder: "john@example.com",
+                                }
                             }
                         }
                     }
@@ -410,17 +606,37 @@ pub fn DaisyRsxKitchenSink() -> Element {
 
                     ComponentDemo { label: "Avatar".to_string(),
                         div { class: "flex gap-4 items-end",
-                            Avatar { name: "John Doe".to_string(), avatar_size: AvatarSize::Small }
-                            Avatar { name: "Jane Smith".to_string(), avatar_size: AvatarSize::Medium }
-                            Avatar { name: "Bob Wilson".to_string(), avatar_size: AvatarSize::Large }
-                            Avatar { name: "Alice Brown".to_string(), avatar_size: AvatarSize::ExtraLarge }
+                            Avatar {
+                                name: "John Doe".to_string(),
+                                avatar_size: AvatarSize::Small,
+                            }
+                            Avatar {
+                                name: "Jane Smith".to_string(),
+                                avatar_size: AvatarSize::Medium,
+                            }
+                            Avatar {
+                                name: "Bob Wilson".to_string(),
+                                avatar_size: AvatarSize::Large,
+                            }
+                            Avatar {
+                                name: "Alice Brown".to_string(),
+                                avatar_size: AvatarSize::ExtraLarge,
+                            }
                         }
                     }
 
                     ComponentDemo { label: "Avatar Types".to_string(),
                         div { class: "flex gap-4 items-center",
-                            Avatar { avatar_type: AvatarType::User, name: "User".to_string(), avatar_size: AvatarSize::Medium }
-                            Avatar { avatar_type: AvatarType::Team, name: "Team Alpha".to_string(), avatar_size: AvatarSize::Medium }
+                            Avatar {
+                                avatar_type: AvatarType::User,
+                                name: "User".to_string(),
+                                avatar_size: AvatarSize::Medium,
+                            }
+                            Avatar {
+                                avatar_type: AvatarType::Team,
+                                name: "Team Alpha".to_string(),
+                                avatar_size: AvatarSize::Medium,
+                            }
                         }
                     }
 
@@ -431,7 +647,9 @@ pub fn DaisyRsxKitchenSink() -> Element {
                                     Badge { badge_color: BadgeColor::Primary, "New" }
                                 }
                                 CardBody {
-                                    p { "This is the card body content. Cards are useful for grouping related information together." }
+                                    p {
+                                        "This is the card body content. Cards are useful for grouping related information together."
+                                    }
                                 }
                             }
                             Card { class: "bg-base-200".to_string(),
@@ -439,7 +657,9 @@ pub fn DaisyRsxKitchenSink() -> Element {
                                     Badge { badge_color: BadgeColor::Success, "Active" }
                                 }
                                 CardBody {
-                                    p { "Cards can contain any content including forms, images, lists, and more." }
+                                    p {
+                                        "Cards can contain any content including forms, images, lists, and more."
+                                    }
                                 }
                             }
                         }
@@ -448,10 +668,19 @@ pub fn DaisyRsxKitchenSink() -> Element {
                     ComponentDemo { label: "Breadcrumb".to_string(),
                         Breadcrumb {
                             items: vec![
-                                BreadcrumbItem { text: "Home".to_string(), href: Some("#".to_string()) },
-                                BreadcrumbItem { text: "Components".to_string(), href: Some("#".to_string()) },
-                                BreadcrumbItem { text: "Kitchen Sink".to_string(), href: None },
-                            ]
+                                BreadcrumbItem {
+                                    text: "Home".to_string(),
+                                    href: Some("#".to_string()),
+                                },
+                                BreadcrumbItem {
+                                    text: "Components".to_string(),
+                                    href: Some("#".to_string()),
+                                },
+                                BreadcrumbItem {
+                                    text: "Kitchen Sink".to_string(),
+                                    href: None,
+                                },
+                            ],
                         }
                     }
                 }
@@ -466,17 +695,24 @@ pub fn DaisyRsxKitchenSink() -> Element {
 
                     ComponentDemo { label: "TabContainer".to_string(),
                         TabContainer {
-                            TabPanel { name: "tabs1".to_string(), tab_name: "Tab 1".to_string(), checked: true,
+                            TabPanel {
+                                name: "tabs1".to_string(),
+                                tab_name: "Tab 1".to_string(),
+                                checked: true,
                                 div { class: "p-4 bg-base-200 rounded-b-lg",
                                     p { "Content for Tab 1. This is the default active tab." }
                                 }
                             }
-                            TabPanel { name: "tabs1".to_string(), tab_name: "Tab 2".to_string(),
+                            TabPanel {
+                                name: "tabs1".to_string(),
+                                tab_name: "Tab 2".to_string(),
                                 div { class: "p-4 bg-base-200 rounded-b-lg",
                                     p { "Content for Tab 2. Click to see this content." }
                                 }
                             }
-                            TabPanel { name: "tabs1".to_string(), tab_name: "Tab 3".to_string(),
+                            TabPanel {
+                                name: "tabs1".to_string(),
+                                tab_name: "Tab 3".to_string(),
                                 div { class: "p-4 bg-base-200 rounded-b-lg",
                                     p { "Content for Tab 3. Tabs are great for organizing content." }
                                 }
@@ -493,14 +729,27 @@ pub fn DaisyRsxKitchenSink() -> Element {
 
                     ComponentDemo { label: "Accordian".to_string(),
                         div { class: "space-y-1",
-                            Accordian { name: "accordion1".to_string(), title: "Section 1 - What is Daisy RSX?".to_string(), checked: true,
-                                p { class: "p-4", "Daisy RSX is a Rust library providing Dioxus components that implement DaisyUI (a Tailwind CSS component library)." }
+                            Accordian {
+                                name: "accordion1".to_string(),
+                                title: "Section 1 - What is Daisy RSX?".to_string(),
+                                checked: true,
+                                p { class: "p-4",
+                                    "Daisy RSX is a Rust library providing Dioxus components that implement DaisyUI (a Tailwind CSS component library)."
+                                }
                             }
-                            Accordian { name: "accordion1".to_string(), title: "Section 2 - How do I install it?".to_string(),
-                                p { class: "p-4", "Add daisy_rsx to your Cargo.toml dependencies and include the DaisyUI stylesheet in your project." }
+                            Accordian {
+                                name: "accordion1".to_string(),
+                                title: "Section 2 - How do I install it?".to_string(),
+                                p { class: "p-4",
+                                    "Add daisy_rsx to your Cargo.toml dependencies and include the DaisyUI stylesheet in your project."
+                                }
                             }
-                            Accordian { name: "accordion1".to_string(), title: "Section 3 - Is it production ready?".to_string(),
-                                p { class: "p-4", "Yes! Daisy RSX is designed for server-side rendering and is suitable for production use." }
+                            Accordian {
+                                name: "accordion1".to_string(),
+                                title: "Section 3 - Is it production ready?".to_string(),
+                                p { class: "p-4",
+                                    "Yes! Daisy RSX is designed for server-side rendering and is suitable for production use."
+                                }
                             }
                         }
                     }
@@ -524,7 +773,9 @@ pub fn DaisyRsxKitchenSink() -> Element {
                             Modal { trigger_id: "demo-modal".to_string(),
                                 ModalBody {
                                     h3 { class: "font-bold text-lg", "Modal Title" }
-                                    p { class: "py-4", "This is the modal content. Modals are useful for confirmations, forms, and displaying additional information without leaving the page." }
+                                    p { class: "py-4",
+                                        "This is the modal content. Modals are useful for confirmations, forms, and displaying additional information without leaving the page."
+                                    }
                                 }
                                 ModalAction {
                                     Button { button_style: ButtonStyle::Ghost, "Cancel" }
@@ -536,14 +787,24 @@ pub fn DaisyRsxKitchenSink() -> Element {
 
                     ComponentDemo { label: "Drawer".to_string(),
                         div {
-                            a { href: "#demo-drawer", class: "btn btn-secondary", "Open Drawer" }
+                            a {
+                                href: "#demo-drawer",
+                                class: "btn btn-secondary",
+                                "Open Drawer"
+                            }
                             Drawer {
                                 trigger_id: "demo-drawer".to_string(),
                                 label: "Drawer Title".to_string(),
                                 DrawerBody {
-                                    p { "This is the drawer body. Drawers slide in from the side and are great for navigation menus, settings panels, or detailed information." }
+                                    p {
+                                        "This is the drawer body. Drawers slide in from the side and are great for navigation menus, settings panels, or detailed information."
+                                    }
                                     div { class: "mt-4",
-                                        Input { label: "Example Input", name: "drawer-input", placeholder: "Type something..." }
+                                        Input {
+                                            label: "Example Input",
+                                            name: "drawer-input",
+                                            placeholder: "Type something...",
+                                        }
                                     }
                                 }
                                 DrawerFooter {
@@ -577,7 +838,7 @@ pub fn DaisyRsxKitchenSink() -> Element {
                                         path {
                                             fill_rule: "evenodd",
                                             d: "M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z",
-                                            clip_rule: "evenodd"
+                                            clip_rule: "evenodd",
                                         }
                                     }
                                 }
@@ -596,7 +857,7 @@ pub fn DaisyRsxKitchenSink() -> Element {
                                         path {
                                             fill_rule: "evenodd",
                                             d: "M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z",
-                                            clip_rule: "evenodd"
+                                            clip_rule: "evenodd",
                                         }
                                     }
                                 }
@@ -678,11 +939,17 @@ pub fn DaisyRsxKitchenSink() -> Element {
                             }
                             div { class: "flex items-center gap-2",
                                 span { class: "font-semibold", "Datetime Format:" }
-                                RelativeTime { datetime: "2024-06-15T12:30:00Z".to_string(), format: RelativeTimeFormat::Datetime }
+                                RelativeTime {
+                                    datetime: "2024-06-15T12:30:00Z".to_string(),
+                                    format: RelativeTimeFormat::Datetime,
+                                }
                             }
                             div { class: "flex items-center gap-2",
                                 span { class: "font-semibold", "Micro Format:" }
-                                RelativeTime { datetime: "2024-12-25T00:00:00Z".to_string(), format: RelativeTimeFormat::Micro }
+                                RelativeTime {
+                                    datetime: "2024-12-25T00:00:00Z".to_string(),
+                                    format: RelativeTimeFormat::Micro,
+                                }
                             }
                         }
                     }
@@ -699,7 +966,8 @@ pub fn DaisyRsxKitchenSink() -> Element {
                     ComponentDemo { label: "Hero".to_string(),
                         Hero {
                             title: "Welcome to Our Product".to_string(),
-                            subtitle: "The best solution for your software development needs. Build faster, ship smarter.".to_string(),
+                            subtitle: "The best solution for your software development needs. Build faster, ship smarter."
+                                .to_string(),
                             cta: "Get Started".to_string(),
                             cta_link: "#".to_string(),
                         }
@@ -708,7 +976,8 @@ pub fn DaisyRsxKitchenSink() -> Element {
                     ComponentDemo { label: "VideoHero".to_string(),
                         VideoHero {
                             title: "See It In Action".to_string(),
-                            subtitle: "Watch our quick demo to see how easy it is to get started with our platform.".to_string(),
+                            subtitle: "Watch our quick demo to see how easy it is to get started with our platform."
+                                .to_string(),
                             video: "https://www.youtube.com/embed/dQw4w9WgXcQ".to_string(),
                             claim: "Trusted by 10,000+ developers".to_string(),
                             cta: "Start Free Trial".to_string(),
@@ -721,9 +990,19 @@ pub fn DaisyRsxKitchenSink() -> Element {
                             title: "Our Features".to_string(),
                             description: "Everything you need to build amazing applications.".to_string(),
                             features: vec![
-                                Feature { title: "Lightning Fast".to_string(), description: "Optimized for performance with zero runtime overhead.".to_string() },
-                                Feature { title: "Type Safe".to_string(), description: "Catch errors at compile time, not in production.".to_string() },
-                                Feature { title: "Easy to Use".to_string(), description: "Simple and intuitive API that feels natural.".to_string() },
+                                Feature {
+                                    title: "Lightning Fast".to_string(),
+                                    description: "Optimized for performance with zero runtime overhead."
+                                        .to_string(),
+                                },
+                                Feature {
+                                    title: "Type Safe".to_string(),
+                                    description: "Catch errors at compile time, not in production.".to_string(),
+                                },
+                                Feature {
+                                    title: "Easy to Use".to_string(),
+                                    description: "Simple and intuitive API that feels natural.".to_string(),
+                                },
                             ],
                         }
                     }
@@ -744,39 +1023,51 @@ pub fn DaisyRsxKitchenSink() -> Element {
                     ComponentDemo { label: "Faq".to_string(),
                         Faq {
                             questions: vec![
-                                FaqText { question: "What is Daisy RSX?".to_string(), answer: "Daisy RSX is a Rust library providing Dioxus components that implement DaisyUI, a Tailwind CSS component library.".to_string() },
-                                FaqText { question: "Is it open source?".to_string(), answer: "Yes! Daisy RSX is fully open source and available on crates.io.".to_string() },
-                                FaqText { question: "Can I use it in production?".to_string(), answer: "Absolutely! It's designed for server-side rendering and production use.".to_string() },
+                                FaqText {
+                                    question: "What is Daisy RSX?".to_string(),
+                                    answer: "Daisy RSX is a Rust library providing Dioxus components that implement DaisyUI, a Tailwind CSS component library."
+                                        .to_string(),
+                                },
+                                FaqText {
+                                    question: "Is it open source?".to_string(),
+                                    answer: "Yes! Daisy RSX is fully open source and available on crates.io."
+                                        .to_string(),
+                                },
+                                FaqText {
+                                    question: "Can I use it in production?".to_string(),
+                                    answer: "Absolutely! It's designed for server-side rendering and production use."
+                                        .to_string(),
+                                },
                             ],
                         }
                     }
 
                     ComponentDemo { label: "Testamonials".to_string(),
                         Testamonials {
-                            text1: "Daisy RSX has transformed how we build UIs in Rust. The components are beautiful and the API is intuitive.".to_string(),
+                            text1: "Daisy RSX has transformed how we build UIs in Rust. The components are beautiful and the API is intuitive."
+                                .to_string(),
                             job1: "Senior Developer".to_string(),
                             person1: "John Doe".to_string(),
                             img1: "https://api.dicebear.com/7.x/avataaars/svg?seed=John".to_string(),
-                            text2: "Finally, a component library that feels natural in Rust. We've reduced our frontend development time by 50%.".to_string(),
+                            text2: "Finally, a component library that feels natural in Rust. We've reduced our frontend development time by 50%."
+                                .to_string(),
                             job2: "Tech Lead".to_string(),
                             person2: "Jane Smith".to_string(),
                             img2: "https://api.dicebear.com/7.x/avataaars/svg?seed=Jane".to_string(),
                         }
                     }
 
-                    ComponentDemo { label: "Customers".to_string(),
-                        Customers {}
-                    }
+                    ComponentDemo { label: "Customers".to_string(), Customers {} }
 
-                    ComponentDemo { label: "Security".to_string(),
-                        Security {}
-                    }
+                    ComponentDemo { label: "Security".to_string(), Security {} }
 
                     ComponentDemo { label: "ProblemSolution".to_string(),
                         ProblemSolution {
                             title: "The Challenge".to_string(),
-                            problem: "Development teams waste countless hours wrestling with complex UI frameworks that don't integrate well with Rust's type system.".to_string(),
-                            solution: "Our platform provides type-safe, compile-time checked components that integrate seamlessly with your Rust codebase, eliminating runtime errors and reducing debugging time.".to_string(),
+                            problem: "Development teams waste countless hours wrestling with complex UI frameworks that don't integrate well with Rust's type system."
+                                .to_string(),
+                            solution: "Our platform provides type-safe, compile-time checked components that integrate seamlessly with your Rust codebase, eliminating runtime errors and reducing debugging time."
+                                .to_string(),
                             image: "https://placehold.co/560x420/e2e8f0/475569?text=Solution".to_string(),
                         }
                     }
@@ -785,7 +1076,8 @@ pub fn DaisyRsxKitchenSink() -> Element {
                         SmallImageFeature {
                             title: "Feature".to_string(),
                             sub_title: "Powerful Development Tools".to_string(),
-                            text: "Build beautiful, responsive interfaces with our comprehensive component library. Every component is designed with accessibility and performance in mind.".to_string(),
+                            text: "Build beautiful, responsive interfaces with our comprehensive component library. Every component is designed with accessibility and performance in mind."
+                                .to_string(),
                             image: "https://placehold.co/728x610/e2e8f0/475569?text=Feature".to_string(),
                             flip: false,
                         }
@@ -831,13 +1123,9 @@ pub fn DaisyRsxKitchenSink() -> Element {
                         }
                     }
 
-                    ComponentDemo { label: "WebinarHeader".to_string(),
-                        WebinarHeader {}
-                    }
+                    ComponentDemo { label: "WebinarHeader".to_string(), WebinarHeader {} }
 
-                    ComponentDemo { label: "Team".to_string(),
-                        Team {}
-                    }
+                    ComponentDemo { label: "Team".to_string(), Team {} }
                 }
 
                 // Footer

@@ -27,18 +27,25 @@ impl Display for ToolTipColor {
 
 #[derive(Props, Clone, PartialEq)]
 pub struct ToolTipProps {
-    text: String,
-    children: Element,
-    class: Option<String>,
-    alert_color: Option<ToolTipColor>,
+    pub text: String,
+    pub children: Element,
+    #[props(default)]
+    pub tooltip_color: ToolTipColor,
+    /// All standard HTML div attributes (id, style, onclick, etc.)
+    #[props(extends = div, extends = GlobalAttributes)]
+    pub attributes: Vec<Attribute>,
 }
 
 #[component]
 pub fn ToolTip(props: ToolTipProps) -> Element {
-    let alert_color = props.alert_color.unwrap_or_default();
-    let class = props.class.unwrap_or_default();
+    let color = props.tooltip_color.to_string();
 
     rsx!(
-        div { class: "tooltip {alert_color} {class}", "data-tip": props.text, {props.children} }
+        div {
+            class: "tooltip {color}",
+            "data-tip": props.text,
+            ..props.attributes,
+            {props.children}
+        }
     )
 }

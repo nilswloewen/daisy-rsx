@@ -1,4 +1,6 @@
 #![allow(non_snake_case)]
+use std::fmt::Display;
+
 use dioxus::prelude::*;
 
 #[derive(Copy, Clone, Debug, Default, PartialEq, Eq)]
@@ -11,33 +13,33 @@ pub enum AlertColor {
     Success,
 }
 
-impl AlertColor {
-    pub fn to_string(&self) -> &'static str {
+impl Display for AlertColor {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            AlertColor::Default => "alert alert-info",
-            AlertColor::Info => "alert alert-info",
-            AlertColor::Warn => "alert alert-warning",
-            AlertColor::Error => "alert alert-error",
-            AlertColor::Success => "alert alert-success",
+            AlertColor::Default => write!(f, ""),
+            AlertColor::Info => write!(f, "alert-info"),
+            AlertColor::Warn => write!(f, "alert-warning"),
+            AlertColor::Error => write!(f, "alert-error"),
+            AlertColor::Success => write!(f, "alert-success"),
         }
     }
 }
 
 #[derive(Props, Clone, PartialEq)]
 pub struct AlertProps {
-    children: Element,
-    class: Option<String>,
-    alert_color: Option<AlertColor>,
+    pub children: Element,
+    #[props(default)]
+    pub alert_color: AlertColor,
+    /// All standard HTML div attributes (id, style, onclick, etc.)
+    #[props(extends = div, extends = GlobalAttributes)]
+    pub attributes: Vec<Attribute>,
 }
 
 #[component]
 pub fn Alert(props: AlertProps) -> Element {
-    let alert_color = props.alert_color.unwrap_or_default();
-    let class = props.class.unwrap_or_default();
-
-    let class = format!("{} {}", alert_color.to_string(), class);
+    let color = props.alert_color.to_string();
 
     rsx!(
-        div { class: "{class}", {props.children} }
+        div { class: "alert {color}", ..props.attributes, {props.children} }
     )
 }

@@ -58,10 +58,7 @@ pub fn Input(props: InputProps) -> Element {
     rsx!(
         label { class: "flex flex-col gap-1",
             span { "{props.label}" }
-            input {
-                class: "input input-bordered {size_class}",
-                ..props.attributes
-            }
+            input { class: "input input-bordered {size_class}", ..props.attributes }
         }
     )
 }

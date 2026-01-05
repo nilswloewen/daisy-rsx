@@ -1,3 +1,6 @@
+[workspace]
+members = ["demo"]
+
 [package]
 name = "daisy_rsx"
 version = "0.1.47"

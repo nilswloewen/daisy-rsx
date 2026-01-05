@@ -14,21 +14,10 @@ pub struct AccordianProps {
 #[component]
 pub fn Accordian(props: AccordianProps) -> Element {
     rsx!(
-        div {
-            class: "collapse collapse-arrow bg-base-200",
-            input {
-                checked: props.checked,
-                "type": "radio",
-                name: props.name
-            }
-            div {
-                class: "collapse-title text-md font-medium",
-                "{props.title}"
-            }
-            div {
-                class: "collapse-content  bg-base-200",
-                {{props.children}}
-            }
+        div { class: "collapse collapse-arrow bg-base-200",
+            input { checked: props.checked, "type": "radio", name: props.name }
+            div { class: "collapse-title text-md font-medium", "{props.title}" }
+            div { class: "collapse-content  bg-base-200", {{ props.children }} }
         }
     )
 }

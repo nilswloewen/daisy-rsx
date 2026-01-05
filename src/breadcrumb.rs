@@ -9,17 +9,16 @@ pub struct BreadcrumbItem {
 
 #[derive(Props, Clone, PartialEq)]
 pub struct BreadcrumbProps {
-    items: Vec<BreadcrumbItem>,
-    class: Option<String>,
+    pub items: Vec<BreadcrumbItem>,
+    /// All standard HTML div attributes (id, style, onclick, etc.)
+    #[props(extends = div, extends = GlobalAttributes)]
+    pub attributes: Vec<Attribute>,
 }
 
 #[component]
 pub fn Breadcrumb(props: BreadcrumbProps) -> Element {
-    let class = props.class.unwrap_or_default();
-
     rsx!(
-        div {
-            class: "breadcrumbs text-sm {class}",
+        div { class: "breadcrumbs text-sm", ..props.attributes,
             ul {
                 for item in props.items {
                     li {

@@ -15,9 +15,7 @@ pub struct FieldsetProps {
 #[component]
 pub fn Fieldset(props: FieldsetProps) -> Element {
     rsx!(
-        fieldset {
-            class: "fieldset",
-            ..props.attributes,
+        fieldset { class: "fieldset", ..props.attributes,
             legend { class: "fieldset-legend", "{props.legend}" }
             {props.children}
         }
